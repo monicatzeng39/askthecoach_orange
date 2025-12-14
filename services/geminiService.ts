@@ -1,5 +1,5 @@
 import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
-import { SYSTEM_INSTRUCTION } from "../constants.ts";
+import { SYSTEM_INSTRUCTION } from "../constants";
 
 let chatSession: Chat | null = null;
 let ai: GoogleGenAI | null = null;
