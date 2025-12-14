@@ -6,6 +6,8 @@
     <title>橘子老師 - AI 單車教練</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 加入 Babel 用於解析 TSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
       body {
         font-family: 'Inter', sans-serif;
@@ -18,33 +20,36 @@
           scrollbar-width: none;
       }
     </style>
+    <!-- 錯誤攔截器 -->
     <script>
       window.addEventListener('error', function(event) {
         var root = document.getElementById('root');
         if (root) {
-          // Check if we are still in the loading state (spinner exists)
-          var isSpinner = root.querySelector('div[style*="animation: spin"]');
-          if (isSpinner) {
-             root.innerHTML = '<div style="color: #ef4444; padding: 2rem; text-align: center; font-family: sans-serif;">' +
-            '<h2 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem;">載入發生錯誤</h2>' +
-            '<p style="background: #fee2e2; padding: 1rem; border-radius: 0.5rem; display: inline-block;">' + event.message + '</p>' +
+            root.innerHTML = '<div style="color: #ef4444; padding: 2rem; text-align: center; font-family: sans-serif; max-width: 600px; margin: 0 auto; margin-top: 50px;">' +
+            '<h2 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem;">⚠️ 程式載入錯誤</h2>' +
+            '<div style="background: #fee2e2; padding: 1rem; border-radius: 0.5rem; text-align: left; font-family: monospace; font-size: 0.9rem; border: 1px solid #fca5a5;">' + 
+            event.message + 
+            '</div>' +
+            '<p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">請檢查 Console 了解詳細資訊。</p>' +
             '</div>';
-          }
         }
       });
     </script>
-  <script type="importmap">
+    <!-- Import Map：修正版本衝突，統一使用 React 18 -->
+    <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "react-dom": "https://esm.sh/react-dom@18.3.1",
+    "@google/genai": "https://esm.sh/@google/genai@0.1.1",
+    "lucide-react": "https://esm.sh/lucide-react@0.378.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.561.0"
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>
-</head>
+  </head>
   <body class="bg-gray-50 text-gray-900">
     <div id="root">
       <div style="display: flex; justify-content: center; align-items: center; height: 100vh; color: #666; flex-direction: column; gap: 10px;">
@@ -55,6 +60,7 @@
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       </style>
     </div>
-    <script type="module" src="./index.tsx"></script>
+    <!-- 使用 babel 解析且保留 module 特性 -->
+    <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
   </body>
 </html>
