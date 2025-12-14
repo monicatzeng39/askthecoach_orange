@@ -25,17 +25,21 @@
       window.addEventListener('error', function(event) {
         var root = document.getElementById('root');
         if (root) {
-            root.innerHTML = '<div style="color: #ef4444; padding: 2rem; text-align: center; font-family: sans-serif; max-width: 600px; margin: 0 auto; margin-top: 50px;">' +
-            '<h2 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem;">⚠️ 程式載入錯誤</h2>' +
-            '<div style="background: #fee2e2; padding: 1rem; border-radius: 0.5rem; text-align: left; font-family: monospace; font-size: 0.9rem; border: 1px solid #fca5a5;">' + 
-            event.message + 
-            '</div>' +
-            '<p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">請檢查 Console 了解詳細資訊。</p>' +
-            '</div>';
+            // 只有當還在 loading 狀態（內容包含 spinner）時才替換內容
+            var content = root.innerHTML;
+            if (content.indexOf('animation: spin') !== -1) {
+                root.innerHTML = '<div style="color: #ef4444; padding: 2rem; text-align: center; font-family: sans-serif; max-width: 600px; margin: 0 auto; margin-top: 50px;">' +
+                '<h2 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem;">⚠️ 程式載入錯誤</h2>' +
+                '<div style="background: #fee2e2; padding: 1rem; border-radius: 0.5rem; text-align: left; font-family: monospace; font-size: 0.9rem; border: 1px solid #fca5a5; word-break: break-all;">' + 
+                event.message + 
+                '</div>' +
+                '<p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">若持續發生，請檢查網路連線或重新整理。</p>' +
+                '</div>';
+            }
         }
       });
     </script>
-    <!-- Import Map：修正版本衝突，統一使用 React 18 -->
+    <!-- Import Map：只保留 React 18，移除衝突的 React 19 設定 -->
     <script type="importmap">
 {
   "imports": {
