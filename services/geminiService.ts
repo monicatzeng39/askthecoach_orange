@@ -1,20 +1,26 @@
 import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
-import { SYSTEM_INSTRUCTION } from "../constants.ts";
+import { SYSTEM_INSTRUCTION } from "../constants";
 
 let chatSession: Chat | null = null;
+let ai: GoogleGenAI | null = null;
 
-// Initialize the API client
-// Note: In a real environment, process.env.API_KEY is populated by the build system or runtime.
-// We use a safe check here to prevent crashing in environments where process is undefined.
-const apiKey = typeof process !== 'undefined' && process.env ? process.env.API_KEY : '';
-const ai = new GoogleGenAI({ apiKey });
+const getAiClient = () => {
+  if (!ai) {
+    const apiKey = typeof process !== 'undefined' && process.env ? process.env.API_KEY : '';
+    // If no key is present, this might throw depending on SDK version, 
+    // but initializing lazily prevents app-wide crash on load.
+    ai = new GoogleGenAI({ apiKey });
+  }
+  return ai;
+};
 
 export const startChatSession = (): Chat => {
-  chatSession = ai.chats.create({
+  const client = getAiClient();
+  chatSession = client.chats.create({
     model: 'gemini-2.5-flash',
     config: {
       systemInstruction: SYSTEM_INSTRUCTION,
-      temperature: 0.7, // Balance between creative coach persona and logic
+      temperature: 0.7,
     },
     history: [], 
   });
