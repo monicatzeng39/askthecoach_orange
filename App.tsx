@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Send, AlertTriangle, RefreshCcw } from 'lucide-react';
-import { Message } from './types.ts';
-import { startChatSession, sendMessageStream } from './services/geminiService.ts';
-import { INITIAL_MESSAGE } from './constants.ts';
-import ChatMessage from './components/ChatMessage.tsx';
-import Header from './components/Header.tsx';
+import { Message } from './types';
+import { startChatSession, sendMessageStream } from './services/geminiService';
+import { INITIAL_MESSAGE } from './constants';
+import ChatMessage from './components/ChatMessage';
+import Header from './components/Header';
 import { GenerateContentResponse } from '@google/genai';
 
 const App: React.FC = () => {
