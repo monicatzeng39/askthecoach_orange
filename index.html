@@ -17,36 +17,7 @@
           -ms-overflow-style: none;
           scrollbar-width: none;
       }
-      #error-log {
-          color: red;
-          padding: 20px;
-          white-space: pre-wrap;
-          font-family: monospace;
-          background: #fff0f0;
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 9999;
-      }
     </style>
-    <script>
-      window.addEventListener('error', function(event) {
-        var errorLog = document.getElementById('error-log');
-        if (errorLog) {
-          errorLog.style.display = 'block';
-          errorLog.textContent += 'Error: ' + event.message + '\n';
-        }
-      });
-      window.addEventListener('unhandledrejection', function(event) {
-        var errorLog = document.getElementById('error-log');
-        if (errorLog) {
-          errorLog.style.display = 'block';
-          errorLog.textContent += 'Promise Rejection: ' + event.reason + '\n';
-        }
-      });
-    </script>
   <script type="importmap">
 {
   "imports": {
@@ -60,8 +31,11 @@
 </script>
 </head>
   <body class="bg-gray-50 text-gray-900">
-    <div id="error-log"></div>
-    <div id="root"></div>
+    <div id="root">
+      <div style="display: flex; justify-content: center; align-items: center; height: 100vh; color: #666;">
+        Loading...
+      </div>
+    </div>
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>
