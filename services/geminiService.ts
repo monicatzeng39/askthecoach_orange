@@ -7,7 +7,15 @@ let ai: GoogleGenAI | null = null;
 const getAiClient = () => {
   if (!ai) {
     // Safety check for process.env which might not be available in browser build steps without config
-    const apiKey = typeof process !== 'undefined' && process.env ? process.env.API_KEY : '';
+    let apiKey = '';
+    try {
+        if (typeof process !== 'undefined' && process.env && process.env.API_KEY) {
+            apiKey = process.env.API_KEY;
+        }
+    } catch (e) {
+        console.warn("Could not access process.env");
+    }
+    
     ai = new GoogleGenAI({ apiKey });
   }
   return ai;
