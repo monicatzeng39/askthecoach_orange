@@ -10,7 +10,6 @@
       body {
         font-family: 'Inter', sans-serif;
       }
-      /* Custom scrollbar for chat area */
       .scrollbar-hide::-webkit-scrollbar {
           display: none;
       }
@@ -18,21 +17,47 @@
           -ms-overflow-style: none;
           scrollbar-width: none;
       }
+      #error-log {
+          color: red;
+          padding: 20px;
+          white-space: pre-wrap;
+          font-family: monospace;
+          background: #fff0f0;
+          display: none;
+      }
     </style>
+    <script>
+      window.addEventListener('error', function(event) {
+        var errorLog = document.getElementById('error-log');
+        if (errorLog) {
+          errorLog.style.display = 'block';
+          errorLog.textContent += 'Error: ' + event.message + '\nAt: ' + event.filename + ':' + event.lineno + '\n\n';
+        }
+      });
+      window.addEventListener('unhandledrejection', function(event) {
+        var errorLog = document.getElementById('error-log');
+        if (errorLog) {
+          errorLog.style.display = 'block';
+          errorLog.textContent += 'Promise Rejection: ' + event.reason + '\n\n';
+        }
+      });
+    </script>
   <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-dom": "https://esm.sh/react-dom@^19.2.3",
     "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.561.0"
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>
 </head>
   <body class="bg-gray-50 text-gray-900">
+    <div id="error-log"></div>
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>

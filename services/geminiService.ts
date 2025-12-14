@@ -1,14 +1,13 @@
 import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
-import { SYSTEM_INSTRUCTION } from "../constants";
+import { SYSTEM_INSTRUCTION } from "../constants.ts";
 
 let chatSession: Chat | null = null;
 let ai: GoogleGenAI | null = null;
 
 const getAiClient = () => {
   if (!ai) {
+    // Safety check for process.env which might not be available in browser build steps without config
     const apiKey = typeof process !== 'undefined' && process.env ? process.env.API_KEY : '';
-    // If no key is present, this might throw depending on SDK version, 
-    // but initializing lazily prevents app-wide crash on load.
     ai = new GoogleGenAI({ apiKey });
   }
   return ai;
