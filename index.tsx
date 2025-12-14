@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 
 const rootElement = document.getElementById('root');
@@ -8,7 +8,7 @@ if (!rootElement) {
 }
 
 try {
-  const root = ReactDOM.createRoot(rootElement);
+  const root = createRoot(rootElement);
   root.render(
     <React.StrictMode>
       <App />
@@ -16,5 +16,7 @@ try {
   );
 } catch (error) {
   console.error("Render Error:", error);
-  rootElement.innerHTML = `<div style="color:red; padding:20px;">Render Failed: ${error.message}</div>`;
+  if (rootElement) {
+      rootElement.innerHTML = `<div style="color:red; padding:20px;">Render Failed: ${error instanceof Error ? error.message : String(error)}</div>`;
+  }
 }
