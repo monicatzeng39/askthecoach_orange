@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Send, AlertTriangle, RefreshCcw } from 'lucide-react';
-import { Message } from './types';
-import { startChatSession, sendMessageStream } from './services/geminiService';
-import { INITIAL_MESSAGE } from './constants';
-import ChatMessage from './components/ChatMessage';
-import Header from './components/Header';
+import { Message } from './types.ts';
+import { startChatSession, sendMessageStream } from './services/geminiService.ts';
+import { INITIAL_MESSAGE } from './constants.ts';
+import ChatMessage from './components/ChatMessage.tsx';
+import Header from './components/Header.tsx';
 import { GenerateContentResponse } from '@google/genai';
 
 const App: React.FC = () => {
@@ -17,15 +17,20 @@ const App: React.FC = () => {
 
   // Initialize chat on mount
   useEffect(() => {
-    startChatSession();
-    // Add initial greeting
-    setMessages([
-      {
-        id: 'init-1',
-        role: 'model',
-        text: INITIAL_MESSAGE,
-      },
-    ]);
+    try {
+      startChatSession();
+      // Add initial greeting
+      setMessages([
+        {
+          id: 'init-1',
+          role: 'model',
+          text: INITIAL_MESSAGE,
+        },
+      ]);
+    } catch (e) {
+      console.error("Failed to initialize chat:", e);
+      setError("初始化失敗，請檢查 API Key 設定。");
+    }
   }, []);
 
   // Auto-scroll to bottom when messages change
@@ -111,15 +116,19 @@ const App: React.FC = () => {
 
   const handleReset = () => {
      if (window.confirm('確定要重新開始對話嗎？目前的記錄將會清除。')) {
-        startChatSession();
-        setMessages([
-          {
-            id: Date.now().toString(),
-            role: 'model',
-            text: INITIAL_MESSAGE,
-          },
-        ]);
-        setError(null);
+        try {
+          startChatSession();
+          setMessages([
+            {
+              id: Date.now().toString(),
+              role: 'model',
+              text: INITIAL_MESSAGE,
+            },
+          ]);
+          setError(null);
+        } catch(e) {
+          setError("重置失敗");
+        }
      }
   };
 

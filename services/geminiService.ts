@@ -1,11 +1,13 @@
 import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
-import { SYSTEM_INSTRUCTION } from "../constants";
+import { SYSTEM_INSTRUCTION } from "../constants.ts";
 
 let chatSession: Chat | null = null;
 
 // Initialize the API client
 // Note: In a real environment, process.env.API_KEY is populated by the build system or runtime.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// We use a safe check here to prevent crashing in environments where process is undefined.
+const apiKey = typeof process !== 'undefined' && process.env ? process.env.API_KEY : '';
+const ai = new GoogleGenAI({ apiKey });
 
 export const startChatSession = (): Chat => {
   chatSession = ai.chats.create({
