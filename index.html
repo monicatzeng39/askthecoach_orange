@@ -6,7 +6,6 @@
     <title>橘子老師 - AI 單車教練</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
       body {
         font-family: 'Inter', sans-serif;
@@ -20,35 +19,19 @@
           scrollbar-width: none;
       }
     </style>
-    <!-- 錯誤處理 UI：若 React 載入失敗會顯示 -->
-    <script>
-      window.addEventListener('error', function(event) {
-        var root = document.getElementById('root');
-        // 忽略非致命的警告
-        if (event.message && event.message.includes('ResizeObserver')) return;
-        
-        if (root && root.innerHTML.trim() === '') {
-             root.innerHTML = '<div style="color: #ef4444; padding: 2rem; text-align: center; font-family: sans-serif; max-width: 600px; margin: 50px auto;">' +
-                '<h2 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem;">⚠️ 程式啟動失敗</h2>' +
-                '<p style="color: #666;">' + (event.message || '發生未知錯誤') + '</p>' +
-                '</div>';
-        }
-      });
-    </script>
   <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@18.3.1",
-    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-    "react-dom": "https://esm.sh/react-dom@18.3.1",
-    "@google/genai": "https://esm.sh/@google/genai@0.1.1",
-    "lucide-react": "https://esm.sh/lucide-react@0.378.0?external=react,react-dom"
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0"
   }
 }
 </script>
 </head>
   <body class="bg-gray-50 text-gray-900">
     <div id="root"></div>
-    <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
   </body>
 </html>
