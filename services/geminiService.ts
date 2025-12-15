@@ -5,7 +5,7 @@ let chatSession: Chat | null = null;
 
 // Initialize the API client
 // Note: In a real environment, process.env.API_KEY is populated by the build system or runtime.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY });
 
 export const startChatSession = (): Chat => {
   chatSession = ai.chats.create({
